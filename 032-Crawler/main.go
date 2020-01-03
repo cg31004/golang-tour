@@ -17,19 +17,31 @@ func Crawl(url string, depth int, fetcher Fetcher) {
 	// TODO: Fetch URLs in parallel.
 	// TODO: Don't fetch the same URL twice.
 	// This implementation doesn't do either:
+	defer wg.Done()
 	if depth <= 0 {
 		return
 	}
-	body, urls, err := fetcher.Fetch(url)
+	_, urls, err := fetcher.Fetch(url)
 	if err != nil {
-		fmt.Println(err)
+		// fmt.Println(err)
 		return
 	}
-	fmt.Printf("found: %s %q\n", url, body)
-	for _, u := range urls {
-		Crawl(u, depth-1, fetcher)
+	sMytex.Lock()
+	if urlmap[url] == 0 {
+		urlmap[url]++
+		depth--
+
+		for _, u := range urls {
+			wg.Add(1)
+			go Crawl(u, depth, fetcher)
+		}
 	}
-	return
+	sMytex.Unlock()
+	// fmt.Printf("found: %s %q\n", url, body)
+	// for _, u := range urls {
+	// 	Crawl(u, depth-1, fetcher)
+	// }
+	// return
 }
 
 var (
@@ -43,8 +55,8 @@ func main() {
 	Crawl("http://golang.org/", 4, fetcher)
 	wg.Wait()
 
-	for key, _ := range urlmap {
-		fmt.Println(key)
+	for k, _ := range urlmap {
+		fmt.Println(k)
 	}
 }
 
