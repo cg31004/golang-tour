@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 )
 
 type Fetcher interface {
@@ -31,8 +32,20 @@ func Crawl(url string, depth int, fetcher Fetcher) {
 	return
 }
 
+var (
+	urlmap = make(map[string]int)
+	sMytex sync.Mutex
+	wg     sync.WaitGroup
+)
+
 func main() {
+	wg.Add(1)
 	Crawl("http://golang.org/", 4, fetcher)
+	wg.Wait()
+
+	for key, _ := range urlmap {
+		fmt.Println(key)
+	}
 }
 
 // fakeFetcher is Fetcher that returns canned results.

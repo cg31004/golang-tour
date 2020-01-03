@@ -34,10 +34,22 @@ func map2() {
 		"Google": Vertex{
 			37.11112, -122.08230,
 		},
+		"QQ": Vertex{
+			45.1111, -132.11111,
+		},
+		"Firefox": Vertex{
+			60.1111, -134.11235,
+		},
 	}
 	fmt.Println(m)
 	fmt.Println(m["Bell Labs"])
 	fmt.Println(m["Google"])
+	fmt.Println("=======   small test ==============")
+	for k, v := range m {
+		fmt.Println(k)
+		fmt.Println(v)
+	}
+	fmt.Println("=======   small test ==============")
 
 }
 
