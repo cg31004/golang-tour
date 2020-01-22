@@ -17,6 +17,7 @@ import (
 // 	}
 
 // }
+var levelCheck map[int]int
 
 func traversal(t *tree.Tree) {
 	if t == nil {

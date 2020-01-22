@@ -7,7 +7,7 @@ type Student struct {
 	Name  string
 	Age   int
 	score float64
-
+	level int
 	Left  *Student
 	Right *Student
 }
