@@ -12,11 +12,11 @@ func fib(n int, c chan int) {
 }
 
 func main() {
-	c := make(chan int, 20)
+	c := make(chan int, 60)
 	go fib(cap(c), c)
 	for i := range c {
 		fmt.Println(i)
 	}
-	_, ok := <-c
-	fmt.Println(ok)
+	// _, ok := <-c
+	// fmt.Println(ok)
 }
