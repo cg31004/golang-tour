@@ -14,16 +14,16 @@ func threeSum(nums []int) [][]int {
 	var result [][]int
 	var sliceTemp []int
 	var target int
-	c := make(chan []int, 100)
 	for i, v := range nums {
+		c := make(chan []int, 100)
 		sliceTemp = nums[0 : i+1]
 		sliceTemp = append(sliceTemp, nums[i:]...)
 		target = 0 - v
 		go twoSum(sliceTemp, target, c, i)
-	}
-	for z := range c {
-		// result = append(result, i)
-		fmt.Println(z)
+		for z := range c {
+			// result = append(result, i)
+			fmt.Println(z)
+		}
 	}
 
 	return result

@@ -3,4 +3,8 @@ import json
 with open("tmp.json", "r", encoding="utf-8") as f:
     jf = json.loads(f.read())
 
-print(len(jf["items"]))
+for k,v in jf.items():
+    print(k)
+    if k != "scheme":
+        print(v)
+        print("============================================")
